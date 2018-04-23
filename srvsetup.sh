@@ -52,3 +52,5 @@ docker create --name=transmission \
 -p 9091:9091 -p 51413:51413 \
 -p 51413:51413/udp \
 linuxserver/transmission
+
+docker container start transmission
