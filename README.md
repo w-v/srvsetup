@@ -1,0 +1,2 @@
+# srvsetup
+server setup script
