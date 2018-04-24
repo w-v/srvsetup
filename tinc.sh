@@ -7,7 +7,7 @@ NETMASK="255.255.255.0"
 
 
 # Install
-apt-get update && apt-get upgrade && apt-get install tinc
+apt-get update && apt-get -y upgrade && apt-get -y install tinc
 
 
 # Config
@@ -30,17 +30,17 @@ PrivateKeyFile=/etc/tinc/${NETNAME}/rsa_key.priv" > /etc/tinc/${NETNAME}/tinc.co
 mkdir /etc/tinc/${NETNAME}/hosts
 
 echo -e "Compression=9
-Adress=$(hostname -I|cut -f 0 -d " ") 655" > /etc/tinc/${NETNAME}/hosts/${SRVNAME}
+Adress=$(hostname -I|cut -f 1 -d " ") 655" > /etc/tinc/${NETNAME}/hosts/${SRVNAME}
 
 echo -e "\n" | sudo tincd -n ${NETNAME} -K
 
 
 # Make tinc-up and down files file
 echo -e "#!/bin/bash
-ifconfig $INTERFACE ${SRVNETIP} netmask ${NETMASK}" > /etc/tinc/${NETNAME}/tinc-up
+ifconfig '$INTERFACE'" ${SRVNETIP} netmask ${NETMASK}" > /etc/tinc/${NETNAME}/tinc-up
 
 echo -e "#!/bin/bash
-ifconfig $INTERFACE ${SRVNETIP} netmask ${NETMASK}" > /etc/tinc/${NETNAME}/tinc-down
+ifconfig '$INTERFACE'" down" > /etc/tinc/${NETNAME}/tinc-down
 
 sudo chmod u+rx /etc/tinc/${NETNAME}/tinc-*
 
