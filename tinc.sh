@@ -30,9 +30,9 @@ PrivateKeyFile=/etc/tinc/${NETNAME}/rsa_key.priv" > /etc/tinc/${NETNAME}/tinc.co
 mkdir /etc/tinc/${NETNAME}/hosts
 
 echo -e "Compression=9
-Adress=$(hostname -I|cut -f 1 -d " ") 655" > /etc/tinc/${NETNAME}/hosts/${SRVNAME}
+Address=$(hostname -I|cut -f 1 -d " ") 655" > /etc/tinc/${NETNAME}/hosts/${SRVNAME}
 
-echo -e "\n" | sudo tincd -n ${NETNAME} -K
+echo -e "\n" | sudo tincd -n ${NETNAME} -K4096
 
 
 # Make tinc-up and down files file

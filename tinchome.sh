@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SRVNAME="menelas"
-HOMENAME="Paris"
+HOMENAME="paris"
 NETNAME="netnet"
 HOMENETIP="10.0.0.2"
 NETMASK="255.255.255.0"
@@ -16,7 +16,7 @@ ConnectTo = ${SRVNAME}" > ${NETPATH}/tinc.conf
 
 echo "Subnet=${HOMENETIP}" > ${NETPATH}/hosts/${HOMENAME}
 
-sudo tincd -n ${NETNAME} -K4096
+echo -e "\n" | sudo tincd -n ${NETNAME} -K4096
 
 sudo echo "ifconfig "'$INTERFACE'" ${HOMENETIP} netmask 255.255.255.0" > ${NETPATH}/tinc-up
 
