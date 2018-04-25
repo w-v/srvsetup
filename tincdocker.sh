@@ -11,16 +11,18 @@ wget https://raw.githubusercontent.com/JensErat/docker-tinc/master/Dockerfile
 
 mkdir ${HOSTDIR}/${NETNAME}
 
-echo "Name=${SRVNAME}
-AddressFamily = ipv4
-Interface = tun0" > ${HOSTDIR}/${NETNAME}/tinc.conf
-
+# Put address and subnet into host file
 echo -e "Compression=9
 Address=$(hostname -I|cut -f 1 -d " ") 655
 Subnet = ${SRVSUBNET}" > ${HOSTDIR}/${NETNAME}/hosts/${SRVNAME}
 
+# Run tinc init to generate keys
 docker run --name tincinit --volume ${HOSTDIR}:/etc/tinc --rm jenserat/tinc -n ${NETNAME} init ${SRVNAME}
 
+# Make conf file
+echo "Name=${SRVNAME}
+AddressFamily = ipv4
+Interface = tun0" > ${HOSTDIR}/${NETNAME}/tinc.conf
 
 # Make tinc-up and down files 
 echo -e "#!/bin/bash
