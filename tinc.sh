@@ -13,17 +13,9 @@ apt-get update && apt-get -y upgrade && apt-get -y install tinc
 # Config
 mkdir /etc/tinc/${NETNAME}
 
-echo "#Interface réseau
-Device=/dev/net/tun
-#Port d'écoute permettant aux autres noeuds de se connecter
-Port=655
-#Le VPN fonctionnera en mode switch 
-#(pas besoin de définir de route mais les packets ne sont pas diffusés à tous les noeuds)
-Mode=switch
-#Identifiant de la machine sur le VPN
-Name=${SRVNAME}
-#Clé privée de la machine sur le réseau VPN
-PrivateKeyFile=/etc/tinc/${NETNAME}/rsa_key.priv" > /etc/tinc/${NETNAME}/tinc.conf
+echo "Name=${SRVNAME}
+AddressFamily = ipv4
+Interface = tun0" > /etc/tinc/${NETNAME}/tinc.conf
 
 
 # Generate keys
