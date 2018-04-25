@@ -9,7 +9,7 @@ NETMASK="255.255.0.0"
 
 wget https://raw.githubusercontent.com/JensErat/docker-tinc/master/Dockerfile
 
-mkdir -p ${HOSTDIR}/${NETNAME}
+mkdir -p ${HOSTDIR}/${NETNAME}/hosts
 
 # Put address and subnet into host file
 echo -e "Compression=9
