@@ -4,7 +4,7 @@ HOSTDIR=/srv/tinc
 SRVNAME="menelas"
 NETNAME="netnet"
 SRVNETIP="10.0.1.1"
-SRVSUBNET="10.O.1.0/24"
+SRVSUBNET="10.0.1.0/24"
 NETMASK="255.255.0.0"
 
 wget https://raw.githubusercontent.com/JensErat/docker-tinc/master/Dockerfile
