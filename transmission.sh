@@ -1,41 +1,43 @@
 #!/bin/bash
 
-TRHOME=/home/transmission
+TRUSR='tr'
+TRGROUP='tr'
+TRHOME=/home/${TRUSR}
 TRCONFIG=${TRHOME}/config
-TRDOWNLOADS=${TRHOME}/downloads
+TRDOWNLOADS=${TRHOME}/dl
+TRINCOMPLETE=${TRHOME}/part
 TRWATCH=${TRHOME}/watch
-TRUID=1001
-TRGID=1001
+
+# requirements
+
+echo "---------Installing requirements----------"
+
+yum -y install epel-release
+yum -y update
+yum -y install transmission-cli transmission-common transmission-daemon
 
 
 # Adding transmission user
 
 echo "---------Adding transmission user----------"
 
-sudo adduser --uid ${TRUID} --disabled-password --gecos "" transmission
-sudo addgroup --gid ${TRGID} transmission
+usermod -l ${TRUSR} transmission
+groupmod -n ${TRGROUP} transmission
 
 # making dirs
 
-echo "---------making dirs----------"
+echo "---------Making dirs----------"
 
-sudo mkdir ${TRHOME} ${TRWATCH} ${TRDOWNLOADS} ${TRCONFIG} 
-sudo chown ${TRUID}:${TRGID} ${TRHOME} ${TRWATCH} ${TRDOWNLOADS} ${TRCONFIG} 
+mkdir ${TRHOME} ${TRWATCH} ${TRINCOMPLETE} ${TRDOWNLOADS} ${TRCONFIG} 
+chown ${TRUSR}:${TRGROUP} ${TRHOME} ${TRINCOMPLETE} ${TRWATCH} ${TRDOWNLOADS} ${TRCONFIG} 
 
+# configuring transmission-daemon
 
-# transmission container setup
+echo "---------Configuring transmission-daemon----------"
 
-echo "---------transmission container setup----------"
+transmission-daemon -g ${TRCONFIG} &
+sleep 2
+transmission-remote --exit
+cp settings.json ${TRCONFIG} && echo "---------Installed user settings----------"
 
-docker create --name=transmission \
--v ${TRCONFIG}:/config \
--v ${TRDOWNLOADS}:/downloads \
--v ${TRWATCH}:/watch \
--e PGID=${TRGID} -e PUID=${TRUID} \
--e TZ=Germany/Berlin \
--p 9091:9091 -p 51413:51413 \
--p 51413:51413/udp \
-linuxserver/transmission
-
-docker container start transmission
-
+systemctl enable transmission-daemon.service
