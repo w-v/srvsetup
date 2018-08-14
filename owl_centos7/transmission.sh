@@ -41,3 +41,4 @@ transmission-remote --exit
 cp settings.json ${TRCONFIG} && echo "---------Installed user settings----------"
 
 systemctl enable transmission-daemon.service
+systemctl start transmission-daemon.service

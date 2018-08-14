@@ -9,4 +9,5 @@ cp conf/nginx.conf /etc/nginx/
 
 ln -s ${TRDOWNLOADS} ${ROOTDIR}/dl
 
-
+systemctl enable nginx.service
+systemctl start nginx.service

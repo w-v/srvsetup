@@ -49,4 +49,6 @@ chmod u+rx /etc/tinc/${NETNAME}/tinc-*
 
 
 # Start tink
-tincd -n ${NETNAME}
+systemctl enable tinc
+systemctl enable tinc@netnet
+systemctl start  tinc@netnet
