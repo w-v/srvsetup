@@ -1,10 +1,10 @@
 #!/bin/bash
 
-TRUSR='tr'
+export TRUSR='tr'
 TRGROUP='tr'
-TRHOME=/home/${TRUSR}
+export TRHOME=/home/${TRUSR}
 TRCONFIG=${TRHOME}/config
-TRDOWNLOADS=${TRHOME}/dl
+export TRDOWNLOADS=${TRHOME}/dl
 TRINCOMPLETE=${TRHOME}/part
 TRWATCH=${TRHOME}/watch
 
